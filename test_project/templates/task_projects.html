@@ -1,0 +1,206 @@
+
+
+{% extends "showhome.html" %}
+
+{% block title %}
+    <title>项目</title>
+{% endblock %}
+{#<link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">#}
+<link rel="stylesheet" href="/static/css/bootstrap-3.3.4.css">
+{% block add_css %}
+{#        <link rel="stylesheet" href="/static/css/bootstrap-3.3.4.css">#}
+{#    <link rel="stylesheet" href="/static/css/auto_interface_lis/css/index.css">#}
+    <link rel="stylesheet" href="/static/css/bootstrap-3.3.4.css">
+{#    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.css">#}
+{#    <link rel="stylesheet" href="/static/css/layoutit.css" type="text/css">#}
+    <link rel="stylesheet" href="/static/css/bootstrap-combined.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/ccc_m/css_ccc.css" type="text/css">
+{% endblock %}
+
+{% block add_js %}
+    <script  src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+
+{% endblock %}
+
+{% block center_text %}
+
+{% csrf_token %}
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			 <a id="modal-579920" href="#modal-container-579920" role="button" class="btn" data-toggle="modal">添加项目</a>
+
+			<div id="modal-container-579920" class="modal  fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+					 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel">
+						添加
+					</h3>
+				</div>
+				<div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <form class="form-inline">
+                                    <fieldset>
+                                         <label>项目名：</label><input id="pro_name" type="text" style="height: 25px"/>
+                                        <span class="help-block">描述：.</span>
+                                        <textarea id="pro_text" cols="30" rows="10" style="width: 100%"></textarea>
+{#                                        <label class="checkbox"><input type="checkbox" /> 勾选同意</label>#}
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button> <button class="btn btn-primary" data-dismiss="modal"  onclick="save_proj()">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <br>
+{#    <br>#}
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+
+{#                添加按钮#}
+
+            <ul class="thumbnails row">
+                {% for task in task_pro %}
+                    <li class="span4 " style="margin-left:0px;margin-right: 1.5%">
+                        <div class="thumbnail">
+{#                            <img alt="300x200" src="#" />#}
+                            <div class="caption">
+                                <h3>
+                                    {{ task.pro_name }}
+                                </h3>
+                                <p class="test_hide" style="height: 43px;">
+                                    {{ task.pro_text }}
+                                </p>
+                                <p>
+                                    <a class="btn btn-primary" href="{% url 'task_project_details' %}?id={{ task.id }}" >项目详情</a>
+{#                                    <a class="btn" href="#" onclick="aler()">添加人员</a>#}
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+
+
+
+
+{#                    <li class="span4">#}
+{#                        <div class="thumbnail">#}
+{#                            <img alt="300x200" src="img/city.jpg" />#}
+{#                            <div class="caption">#}
+{#                                <h3>#}
+{#                                    哈佛结构#}
+{#                                </h3>#}
+{#                                <p>#}
+{#                                    哈佛结构是一种将程序指令存储和数据存储分开的存储器结构，它的主要特点是将程序和数据存储在不同的存储空间中，进行独立编址。#}
+{#                                </p>#}
+{#                                <p>#}
+{#                                    <a class="btn btn-primary" href="#">浏览</a> <a class="btn" href="#">分享</a>#}
+{#                                </p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    <li class="span4">#}
+{#                        <div class="thumbnail">#}
+{#                            <img alt="300x200" src="img/sports.jpg" />#}
+{#                            <div class="caption">#}
+{#                                <h3>#}
+{#                                    改进型哈佛结构#}
+{#                                </h3>#}
+{#                                <p>#}
+{#                                    改进型的哈佛结构具有一条独立的地址总线和一条独立的数据总线，两条总线由程序存储器和数据存储器分时复用，使结构更紧凑。#}
+{#                                </p>#}
+{#                                <p>#}
+{#                                    <a class="btn btn-primary" href="#">浏览</a> <a class="btn" href="#">分享</a>#}
+{#                                </p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </li>#}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function save_proj(){
+
+            pro_name = document.getElementById("pro_name").value;
+            pro_text = document.getElementById("pro_text").value;
+
+            $.ajax({
+                url:"{% url 'add_project' %}",
+                type:"POST",
+                {#contentType:"application/json",#}
+                dataType:"json",
+                processData: false,
+                contentType: false,
+                async:false,
+                data:JSON.stringify({
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "pro_name":pro_name,
+                    "pro_text":pro_text,
+                }),
+                success:function (data) {
+                    window.location.reload();   //刷新整个页面
+                    if (data["success"]){
+                        console.log("后台返回成功");
+                        alert(data["success"]);
+                        {#alert(data["body"]);#}
+                        req_ret_data(data["body"],data["headers"],data["data_id"]);
+                        {#console.log(data["body"]);#}
+
+                        console.log("id是 %s" %data["data_id"]);
+                        {#alert(req_ret_data);#}
+                    }else {
+                        console.log("后台返回失败");
+                        alert(data["fail"]);
+                    }
+
+
+                    {#alert("提交成功")#}
+                }
+            })
+
+
+
+        };
+
+       /* function to_details(to_id) {*/
+            {#lr = "{% url 'task_project_details' %}";#}
+            {#console.log(lr);#}
+            {#$.ajax({#}
+            {#    url:"{% url 'task_project_details' %}",#}
+    /*            type:"POST",
+                contentType:"application/json",
+                dataType:"json",
+                data:JSON.stringify({
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "id":to_id,
+
+                }),
+                success:function (data) {
+
+                    if (data["success"]){
+                        console.log("后台返回成功");
+                    }else {
+                        console.log("后台返回失败");
+                    }
+                }
+            })
+
+        }*/
+    </script>
+
+{% endblock %}

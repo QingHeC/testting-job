@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>首页</title>
+    {% endblock %}
+
+{% block add_css %}
+        <link rel="stylesheet" href="/static/css/bootstrap-combined.min.css" type="text/css">
+        <link href="/static/select-test-mean/css/bootstrap.css" rel='stylesheet' type='text/css' />
+        <link href="/static/css/showhome.css" rel='stylesheet' type='text/css' />
+
+
+        {% endblock %}
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+{#        <script src="/static/select-test-mean/js/jquery.min.js"></script>#}
+{% block add_js %}
+        <script  src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+
+    <script src="/static/js/bootstrap.js"></script>
+
+
+        {% endblock %}
+</head>
+<body>
+    <div class="head_form">
+        <div class="container-fluid title_head ">
+	        <div class="row-fluid">
+                <div class="span12">
+                    <ul class="nav  nav-tabs">
+                        <li class="btn-lg">
+                            <a href="#">首页</a>
+                        </li>
+{#                        <li class="btn-lg">#}
+{#                            <a href="#">工具</a>#}
+{#                        </li>#}
+                        <li class="btn-lg">
+                            <a href={% url "task_project" %}>项目</a>
+                        </li>
+                        <li class="btn-lg">
+                            <a href={% url "stagings"%}>任务</a>
+                        </li>
+{#                        不能按动设置<li class="disabled">#}
+                        <li class="btn-lg">
+                            <a href="#">信息</a>
+                        </li>
+                        <li class="dropdown pull-right">
+                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">{{ user.1 }}<strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">任务</a>
+                                </li>
+                                <li>
+                                    <a href="#">个人信息</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a href={% url "log_out" %}>退出</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{#    <hr style=" height:2px;border:none;border-top:2px dotted #185598;" />#}
+    <hr style="height:2px;border:none;border-bottom:2px  groove skyblue;margin-top: 0px; " />
+
+    {% block center_text %}
+
+        <h1 >欢迎登陆</h1>
+        <P></P>
+    
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/bootstrap-3.3.4.css" type="text/css">
+
+    <script  src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <title>执行任务</title>
+</head>
+<body>
+{% csrf_token %}
+    <div>
+        <div >
+            <div class="btn-group" role="group" style="margin-bottom:10px; ">
+{#                <button type="button" class="btn btn-default" onclick="run_work_date()">运行</button>#}
+            </div>
+        </div>
+    </div>
+    <div >
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr class="info">
+                    <th width="32" align="center" bgcolor="#EFEFEF" name="Num">
+                        <input type="checkbox" name="checkbox" value="checkbox" />
+                    </th>
+
+
+                    <th>
+                        运行时间
+                    </th>
+                    <th>
+                        运行人员
+                    </th>
+                    <th>
+                        查看
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for req_data in run_work %}
+                <tr>
+                    <td align="center" bgcolor="#FFFFFF">
+                        <input type="checkbox" name="checkbox6" value="{{ req_data.id }}" />
+                    </td>
+
+                    <td>
+                        {{ req_data.execute_sign }}
+                    </td>
+                    <td>
+                        {{ req_data.run_work_fullname }}
+                    </td>
+
+
+                    <td>
+{#                        <a class="fa fa-pencil-square-o icon edit-row" href="{% url 'show_reports' %}?show={{ req_data.id  }}" onclick="revise_date('{{ req_data.id  }}')">查看</a>#}
+                        <a class="fa fa-pencil-square-o icon edit-row" target="view_window" href="{% url 'show_reports' %}?show={{ req_data.id  }}">查看</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+    <script type="text/javascript">
+
+        function revise_date(show_i){
+
+        }
+
+        function run_work_date() {
+            var table_asstt = document.getElementsByName("checkbox6");
+            var table_asstt_len = table_asstt.length;
+            work_run_lists = [];
+            for(var i=0;i<table_asstt_len;i++){
+                if(table_asstt[i].checked){
+                    work_run_lists.push(table_asstt[i].value);
+                    {#alert(table_asstt[i].value);#}
+                }
+            }
+
+            if(work_run_lists ==""){
+
+                alert("请选择要执行的任务");
+                return false;
+            }
+            {#alert("分配任务");#}
+
+            $.ajax({
+                url:"{% url 'run_interfaces' %}",
+                type:"POST",
+                contentType:"application/json",
+                dataType:"json",
+                data:JSON.stringify({
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "work_run_lists":work_run_lists,
+                }),
+                success:function (data) {
+
+                    if (data["success"]){
+                        console.log("后台返回成功");
+                        alert(data["success"]);
+                    }else {
+                        console.log("后台返回失败");
+                        alert(data["fail"]);
+                    }
+                }
+            })
+        }
+
+
+    </script>
+</body>
+</html>

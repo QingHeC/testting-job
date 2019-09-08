@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block titile %}
+            test
+        {% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/c_css/public_list_def.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/c_css/page_cen_to_header.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/c_css/rot_list_pic.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/c_css/test_sum_hea.css" type="text/css">
+    {% block ad_css %}
+
+    {% endblock %}
+
+    <script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    {% block ad_jss %}
+
+    {% endblock %}
+
+</head>
+<body>
+    <header class="col-lg-12 back-col" align ="center">
+        <div class="is_senter head-to-sen">
+            <ul class="navbar-lis inline">
+<!--                align="left" -->
+                <li class="head-list-butt" >
+                    <a href={% url "index_in" %}>首页</a>
+                </li>
+                <li class="head-list-butt" >
+                    <a href="#">编程</a>
+                </li>
+                <li class="head-list-butt" >
+                    <a href="#"></a>
+                    软件
+                </li>
+                <li class="head-list-butt" >
+                    <a href="#">测试</a>
+                </li>
+                <li class="head-list-butt">
+                    <a href="#"></a>
+                    分享
+                </li>
+                <li class="head-list-butt">
+                    <a href="#"></a>
+                    总结
+                </li>
+                <li class="head-list-butt">
+                    <a href="#"></a>
+                    关于
+                </li>
+            </ul>
+        </div>
+    </header>
+{% block content %}
+
+
+    <div class="col-lg-12 test-header-text">
+        <div class="#">
+            <a href="#"> 软件测试</a>
+        </div>
+    </div>
+
+<div class="col-lg-12 d-d-top">
+<!--       row-fluid-->
+		<div class="span12">
+            <div class="up-list-tab">
+
+		    	<ul class="page-ist-ul-tes">
+<!--                    page-ist-ul-->
+				<li class="span3">
+					<div class="thumbnail div-left page-ist-ul-tes-disize">
+                        <div class="page-ist-ul-tes-img">
+                            <img alt="300x200" src="img/people.jpg" />
+                        </div>
+						<div class="caption page-ist-ul-tes-text dislodge_unline" >
+							<h3>
+								web接口测试
+							</h3>
+							<p class="dislodge_unline">
+                                <a  href="#"> 利用工具或者编程语言来验证基于HTML协议，
+                                                服务器与服务器、模块与模块、服务器与模块间的访问，
+                                                并验证结果的一种过程。</a>
+							</p>
+							<p>
+<!--								<a class="btn btn-primary" href="#">浏览</a> -->
+                                <a class="btn" href={% url "add_http_req" %}>分享</a>
+							</p>
+						</div>
+					</div>
+				</li>
+				<li class="span3">
+					<div class="thumbnail div-left">
+                        <div class="page-ist-ul-tes-img">
+                            <img alt="300x200" src="img/people.jpg" />
+                        </div>
+						<div class="caption">
+							<h3>
+								哈佛结构
+							</h3>
+							<p>
+								哈佛结构是一种将程序指令存储和数据存储分开的存储器结构，它的主要特点是将程序和数据存储在不同的存储空间中，进行独立编址。
+							</p>
+							<p>
+								<a class="btn btn-primary" href="#">浏览</a> <a class="btn" href="#">分享</a>
+							</p>
+						</div>
+					</div>
+				</li>
+				<li class="span3">
+					<div class="thumbnail div-left">
+                        <div class="page-ist-ul-tes-img">
+                            <img alt="300x200" src="img/people.jpg" />
+                        </div>
+						<div class="caption">
+							<h3>
+								改进型哈佛结构
+							</h3>
+							<p>
+								改进型的哈佛结构具有一条独立的地址总线和一条独立的数据总线，两条总线由程序存储器和数据存储器分时复用，使结构更紧凑。
+							</p>
+							<p>
+								<a class="btn btn-primary" href="#">浏览</a> <a class="btn" href="#">分享</a>
+							</p>
+						</div>
+					</div>
+				</li>
+                <li class="span3">
+					<div class="thumbnail div-left ">
+                        <div class="page-ist-ul-tes-img">
+                            <img alt="300x200" src="img/people.jpg" />
+                        </div>
+						<div class="caption">
+							<h3>
+								改进型哈佛结构
+							</h3>
+							<p>
+								改进型的哈佛结构具有一条独立的地址总线和一条独立的数据总线，两条总线由程序存储器和数据存储器分时复用，使结构更紧凑。
+							</p>
+							<p>
+								<a class="btn btn-primary" href="#">浏览</a> <a class="btn" href="#">分享</a>
+							</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+</div>
+		</div>
+	</div>
+
+    {% endblock %}
+</body>
+</html>

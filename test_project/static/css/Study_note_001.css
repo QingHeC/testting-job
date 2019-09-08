@@ -1,0 +1,31 @@
+.span2{
+    width: 15%;
+    height: 100%;
+    border:1px;
+    float:left;
+    margin-bottom: 2px;
+}
+.span_q{
+     width: 5px;
+}
+.span10{
+    width: 75%;
+    height: 100%;
+    border-left: 5px;
+    margin-left: 0.1%;
+    float: left;
+}
+.study_a{
+    margin-bottom: 1px;
+    color:#184d81;
+}
+.study_ol{
+    padding-left: 1%;
+}
+.study_con{
+    padding-left: 0;
+}
+
+.row-fluid{
+    margin-bottom: 3px;
+}

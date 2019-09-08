@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表</title>
+{#    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">#}
+{#    <link rel="stylesheet" href="/static/css/bootstrap-combined.min.css" type="text/css">#}
+{#    <link rel="stylesheet" href="/static/css/font-awesome.4.6.0.css" type="text/css">#}
+    <link href="/static/css/auto_interface_lis/auto_inter_list.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap-3.3.4.css">
+    <link rel="stylesheet" href="/static/css/auto_interface_lis/css/index.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.css">
+{#    <script  src="/static/js/bootstrap-table-export.js"></script>#}
+{#    <script src="~/Content/bootstrap-table/extensions/export/bootstrap-table-export.js"></script>#}
+{#    <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>#}
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/vue.min.js"></script>
+    <script src="/static/js/jquery-1.11.1.min.js"></script>
+<style type="text/css">
+			#table table {
+				width: 100%;
+				font-size: 14px;
+				border: 1px solid #eee
+			}
+
+			#table {
+				padding: 0 10px;
+			}
+
+			table thead th {
+				background: #f5f5f5;
+				padding: 10px;
+				text-align: left;
+			}
+
+			table tbody td {
+				padding: 10px;
+				text-align: left;
+				border-bottom: 1px solid #eee;
+				border-right: 1px solid #eee;
+			}
+
+			table tbody td span {
+				margin: 0 10px;
+				cursor: pointer;
+			}
+
+			.delete {
+				color: red;
+			}
+
+			.edit {
+				color: #008cd5;
+			}
+
+			.add {
+				border: 1px solid #eee;
+				margin: 10px 0;
+				padding: 15px;
+			}
+
+			input {
+				border: 1px solid #ccc;
+				padding: 5px;
+				border-radius: 3px;
+				margin-right: 15px;
+			}
+
+			button {
+				background: #008cd5;
+				border: 0;
+				padding: 4px 15px;
+				border-radius: 3px;
+				color: #fff;
+			}
+
+			#mask {
+				background: rgba(0, 0, 0, .5);
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				z-index: 4;
+				top: 0;
+				left: 0;
+			}
+
+			.mask {
+				width: 300px;
+				height: 250px;
+				background: rgba(255, 255, 255, 1);
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+				z-index: 47;
+				border-radius: 5px;
+			}
+
+			.title {
+				padding: 10px;
+				border-bottom: 1px solid #eee;
+			}
+
+			.title span {
+				float: right;
+				cursor: pointer;
+			}
+
+			.content {
+				padding: 10px;
+			}
+
+			.content input {
+				width: 270px;
+				margin-bottom: 15px;
+			}
+		</style>
+</head>
+<body>
+    {% csrf_token %}
+    <div class="frame_size">
+        <!--顶部位置-->
+        <div id="tit_up" class="">
+            标题
+        </div>
+{#        <div class="senter_zh">#}
+
+            <div id="" class="left_menu">
+                <h4>
+                    接口列表
+                </h4>
+
+<dl class="list_dl">
+
+        <dt class="list_dt">
+            <span class="_after"></span>
+            <p>效果</p>
+            <i class="list_dt_icon"></i>
+        </dt>
+        <dd class="list_dd">
+            <ul>
+                <li class="list_li">show</li>
+                <li class="list_li">hide</li>
+            </ul>
+        </dd>
+    {% for value_list in data %}
+        {% for value_d in value_list %}
+            <dt class="list_dt">
+                <span class="_after"></span>
+                <p>{{ value_d }}</p>
+                <i class="list_dt_icon"></i>
+            </dt>
+            <dd class="list_dd">
+                <ul>
+                    {% for list_data in value_list.values %}
+                        {% for datum,id in list_data %}
+
+
+
+{#                        {% for listd in datum %}#}
+                                    <li class="list_li" value={{ datum }} >
+                                        <a href="#" onclick="req_rightdata({{ id }},'{{ datum }}')">{{ datum }}</a>
+                                    </li>
+
+{#                        {% endfor %}#}
+                        {% endfor %}
+
+                    {% endfor %}
+                   </ul>
+                </dd>
+        {% endfor %}
+    {% endfor %}
+
+    
+    
+    </dl>
+
+
+
+
+
+            </div>
+            <div id="" class="center_text">
+                <div class="add">
+                    <div style="width: 30%;float: left">
+                        <h3 href="#" style="text-align:left;">接口属于：<a id="show_list_reqname" style="text-align:left;"></a>
+                        </h3>
+                    </div>
+{#                    <input type="text" v-model="addDetail.title" name="title" value="" placeholder="标题" />#}
+                    <input type="text" v-model="addDetail.user" name="user" value="" placeholder="发布人" />
+                    <input type="date" v-model="addDetail.dates" name="date" value="" placeholder="发布时间" />
+                    <a class="btn btn-primary" target="view_window" id="addbtn" urd={% url "add_interface" %} }  onclick="add_date(this)">添加HTTP</a>
+{#   href={% url "add_interface" %} }                 <a class="btn btn-primary" target="view_window" id="addbtn" href={% url "add_interface" %} } onclick="add_date()">添加webserver</a>#}
+			    </div>
+{#                <tableclass="table table-bordered table-hover table-condensed" class="table table-bordered table-hover table-condensed">#}
+  {#ifrme#}
+    <div class="fra_center_right" style="width:100%;height:100%;">
+
+            <iframe id="ifra_right_data" width="100%" height="100%"  src="/test/interface/add_interface/list_name/" frameborder="0" onload="this.height=this.contentWindow.document.body.scrollHeight+60"></iframe>
+
+{#<table cellpadding="0" cellspacing="0" class="table table-bordered table-striped table-hover table-condensed">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <td width="32" align="center" bgcolor="#EFEFEF" name="Num">#}
+{#                    <input type="checkbox" name="checkbox" value="checkbox" />#}
+{#                </td>#}
+{#                <th>ID</th>#}
+{#                <th>名字</th>#}
+{#                <th>请求方式</th>#}
+{#                <th>URL</th>#}
+{#                <th>Params</th>#}
+{#                <th>Headers</th>#}
+{#                <th>body</th>#}
+{#                <th>描述</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#                <tbody id="tab_content">#}
+{##}
+{#                {% for data in inter_list %}#}
+{#                    <tr nid="{{ data.id }}">#}
+{##}
+{#                        <td align="center" bgcolor="#FFFFFF">#}
+{#                            <input type="checkbox" name="checkbox2" value="checkbox" />#}
+{#                        </td>#}
+{##}
+{#                        <td na="nid">{{ data.id  }}</td>#}
+{#                        <td na="requests_met">{{ data.name }}</td>#}
+{#                        <td na="requests_met">{{ data.req }}</td>#}
+{#                        <td na="urls">{{ data.url }}</td>#}
+{#                        <td na="params">{{ data.params }}</td>#}
+{#                        <td na="headers">{{ data.headers }}</td>#}
+{#                        <td na="body">{{ data.body }}</td>#}
+{#                        <td na="describe">{{ data.describe }}</td>#}
+{#                        <td>#}
+{#                            <a class="glyphicon glyphicon-remove icon del-row" onclick="delete_date()"></a>#}
+{#                            <a class="fa fa-pencil-square-o icon edit-row" onclick="revise_date()"></a>#}
+{#                        </td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{##}
+{##}
+{##}
+{#				</tbody>#}
+{#    </table>#}
+    </div>
+    <div class="down_like">
+                友情链接
+    </div>
+
+</div>
+
+
+
+
+    <!--add data -->
+
+    <script type="text/javascript">
+
+        function req_rightdata(dat_id,dat){
+            {#alert(dat);#}
+            url = "/test/interface/add_interface/list_name/"+ "?id=" +dat_id;
+            var par = document.getElementById("ifra_right_data").src = url;
+
+            document.getElementById("show_list_reqname").innerText = dat;
+
+            {#alert(par);#}
+
+        }
+
+
+
+        {#$(function() {#}
+        {#    bindEvent();#}
+        {# } );#}
+        function autointer_list_data(datas) {
+            {#alert(datas);#}
+            url = "/test/interface/add_interface/list_name/"+ "?id=" +datas;
+            {#alert(url);#}
+            {#console.log("123");#}
+            $.ajax({
+                url:"/test/interface/add_interface/list_name/",
+                type:"POST",
+                contentType:"application/json",
+                dataType:"json",
+                data:JSON.stringify({
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    id:datas
+                }),
+
+                success:function (data) {
+                    console.log("123");
+                    alert("123");
+
+                    Load();
+                    alert();
+
+                    if (data["success"]){
+                        console.log("后台返回成功");
+                        alert(data["success"]);
+                    }else {
+                        console.log("后台返回失败");
+                        alert(data["fail"]);
+                    }
+
+
+                    {#alert("提交成功")#}
+                }
+            })
+        }
+        
+        function delete_date() {
+            alert("删除功能暂未实现");
+        };
+
+        function revise_date() {
+            alert("修改功能暂未实现");
+        };
+
+
+        function add_date(data_this){
+            {#ur = '{% url "add_interface" %} }';#}
+            {#alert(url);#}
+            url = data_this.getAttribute("urd");
+            {#url = document.getElementById("ifra_right_data").urd;#}
+            alert(url);
+            var s = document.getElementById("txt");
+            location.href=url + "?list_name=" +document.getElementById("show_list_reqname").innerText;
+            alert(location.href);
+        };
+        {#左侧打开隐藏内容#}
+        $(".list_dt").on("click",function () {
+            $('.list_dd').stop();
+            $(this).siblings("dt").removeAttr("id");
+            if($(this).attr("id")=="open"){
+                $(this).removeAttr("id").siblings("dd").slideUp();
+            }else{
+                $(this).attr("id","open").next().slideDown().siblings("dd").slideUp();
+            }
+        });
+        function bindEvent() {
+        $('#addbtn').click(function () {
+            $('#addmod').modal('show');
+        })
+    };
+        var app = new Vue({
+				el: '#table',
+				data: {
+					addDetail: {},
+					editlist: false,
+					editDetail: {},
+					newsList: [{
+						title: '在移动设备开发',
+						user: '张若昀',
+						dates: '2018-02-09',
+						id: "45211546"
+					}],
+					editid:''
+				},
+				mounted() {
+
+				},
+				methods: {
+
+					//新增
+					adddetail() {
+						//这里的思路应该是把this.addDetail传给服务端，然后加载列表this.newsList
+						//this.newsList.push(this.addDetail)
+						this.newsList.push({
+							title: this.addDetail.title,
+							user: this.addDetail.user,
+							dates: this.addDetail.dates,
+							id:Math.floor(Math.random()*1000000+1)
+						})
+
+						//axios.post('url',this.addDetail).then((res) =>{
+						//若返回正确结果，清空新增输入框的数据
+						//this.addDetail.title = ""
+						//this.addDetail.user = ""
+						//this.addDetail.dates = ""
+						//})
+
+					},
+					//删除
+					deletelist(id, i) {
+						this.newsList.splice(i, 1);
+						//这边可以传id给服务端进行删除  ID = id
+						//axios.get('url',{ID:id}).then((res) =>{
+						//			加载列表
+						//})
+					},
+					//编辑
+					edit(item) {
+						console.log(item)
+						this.editDetail = {
+							title: item.title,
+							user: item.user,
+							dates: item.dates,
+							id: item.id
+						}
+						this.editlist = true
+						this.editid = item.id
+
+					},
+					//确认更新
+					update() {
+						//编辑的话，也是传id去服务端
+						//axios.get('url',{ID:id}).then((res) =>{
+						//			加载列表
+						//})
+						let _this= this
+						for(let i = 0; i < _this.newsList.length; i++) {
+							if(_this.newsList[i].id ==this.editid) {
+								_this.newsList[i] = {
+									title: _this.editDetail.title,
+									user: _this.editDetail.user,
+									dates: _this.editDetail.dates,
+									id: this.editid
+								}
+								this.editlist = false
+							}
+						}
+					}
+				}
+			});
+
+        $(function(){
+    $("table tr").click(function(){
+        var input = $(this).find("input[type=checkbox]");//获取checkbox
+        //判断当前checkbox是否为选中状态
+        if(input.attr("checked")){
+            input.attr("checked",false);
+        }else{
+            input.attr("checked",true);
+        }
+
+    })
+});
+
+    </script>
+
+
+</body>
+</html>

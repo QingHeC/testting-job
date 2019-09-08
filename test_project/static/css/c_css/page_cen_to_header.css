@@ -1,0 +1,20 @@
+.head-to-sen{
+    height: 60px;
+    width: 80%;
+}
+
+.up-list-tab{
+    padding: 0px;
+}
+
+.page-ist-ul{
+    padding: 0px;
+    margin:auto;
+    list-style: none;
+}
+
+.page-ist-ul>li{
+    width: 30%;
+    float: left;
+    margin-left:2.5%;
+}

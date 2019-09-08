@@ -1,0 +1,91 @@
+body{
+    /*width: 90%;*/
+    border-color: red;
+    border-width: 3px;
+    margin: auto;
+    /*background-color:#F2F2F2;*/
+    /*margin-top:60px;*/
+}
+/* 样式*/
+#fg1{/*内嵌水平线*/
+width:80%;
+margin:0 auto;
+border: 0;
+height: 0;
+border-top: 1px solid rgba(0, 0, 0, 0.1);
+border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+#fg2{/*透明渐变水平线*/
+width:80%;
+margin:0 auto;
+border: 0;
+height: 1px;
+background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+#fg3{/*渐变*/
+width:80%;
+margin:0 auto;
+border: 0;
+height: 1px;
+/*background: #333;*/
+background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+.fra_line{
+        /*background-color:lavender;*/
+}
+
+.fra_header{
+    background-color:white;
+    width:100%;
+    height: 70px;
+}
+
+.fra_center_left{
+    width: 20%;
+    height: 300px;
+    /*background:black;*/
+    float: left;
+}
+/*a标签字体修改*/
+    /*初始化*/
+.a_content_text:link{
+    color: #0f0f0f;
+}
+    /*被访问*/
+.a_content_text:visited{
+    color: #8c8c8c;
+    /*color: blue;*/
+}
+    /*鼠标移动显示*/
+.a_content_text:hover{
+    color: red;
+}
+    /*点击显示*/
+.a_content_text:active{
+    color: #8c8c8c;
+}
+
+a.fra_center_left_pane{
+    height:40px;
+    width: 100%;
+    display:block;
+    border: 1px solid #8c8c8c;
+    color:#8c8c8c;
+    text-align: center;
+    text-decoration:none;
+    line-height: 2.5;
+    float:left;
+}
+
+.fra_center_right{
+    width: 80%;
+    float:left;
+}
+
+.fra_center_center{
+    width: 30%;
+    height: 300px;
+    background:#EBEBF0;
+    float: left;
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+{#        <link rel="stylesheet" href="css/bootstrap-combined.min.css">#}
+    <link rel="stylesheet" href="/static/css/bootstrap-combined.min.css">
+    <script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+    <title>Title</title>
+</head>
+<body>
+        <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table id="tab" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        名字
+                                    </th>
+                                    <th>
+                                        协议
+                                    </th>
+                                    <th>
+                                        请求方式
+                                    </th>
+                                    <th>
+                                        url
+                                    </th>
+                                    <th>
+                                        执行结果
+                                    </th>
+                                    <th>
+                                        执行问题
+                                    </th>
+                                    <th>
+                                        描述
+                                    </th>
+                                    <th>
+                                        执行时间
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for da_i in dats %}
+                                {% if da_i.task_state == 'OK' %}
+
+                                    <tr  class="success">
+
+                                {% elif da_i.task_state == 'Fail' %}
+                                    <tr class="warning">
+
+                                {% else %}
+
+                                    <tr class="error">
+{#                                    info#}
+                                {% endif %}
+
+                                    <td>
+                                        {{ da_i.req_id__name }}
+                                    </td>
+                                    <td>
+                                        {{ da_i.req_id__agreement }}
+                                    </td>
+                                    <td>
+                                        {{ da_i.req_id__req }}
+                                    </td>
+                                    <td>
+                                        {{ da_i.req_id__url }}
+                                    </td>
+                                    <td>
+                                        {{ da_i.task_state }}
+                                    </td>
+                                    <td>
+                                        {{ da_i.execute_situation }}
+                                    </td>
+                                    <td>
+                                        {{ da_i.req_id__describe }}
+                                    </td>
+                                    <td>
+                                        {{ da_i.update_date }}
+                                    </td>
+
+{#                                    <td>#}
+{#                                        <input type="button" name="" id="" onclick='update(this)' value="修改" />#}
+{#                                    </td>#}
+                                </tr>
+
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+{#                        <input type="button" name="" id="" onclick='addRow()' value="增加" />#}
+                        <!-- <button onclick="addRow()">增加</button> -->
+{#                        <input type='file' width='14px' value='' size='' />#}
+                    </div>
+                </div>
+            </div>
+
+    <script>
+
+
+
+
+{#function  addRow(){#}
+{#			var tab = document.getElementById("tab");#}
+{#			//alert(tab.rows.length)#}
+{#			 var rownum = tab.rows.length;// 行数#}
+{#			 var newRow=tab.insertRow(rownum);#}
+{##}
+{#			var cellname = newRow.insertCell(0);#}
+{#			 cellname.innerHTML="<input type='text' value='' />";#}
+{##}
+{#			var cellage = newRow.insertCell(1);#}
+{#			 cellage.innerHTML="<input type='number' value='' size='10' />";#}
+{##}
+{#             var cellage2 = newRow.insertCell(2);#}
+{#             cellage2.innerHTML = "<select type='' onchange='upd_text_file(this)' width='14px' value='' size='' ><option value='1'>file</option><option value='2'>text</option></select>";#}
+{##}
+{#             var cellage3 = newRow.insertCell(3);#}
+{#             cellage3.innerHTML =  "<input type='file' width='14px' value='' size='' />";#}
+{##}
+{#			 var action = newRow.insertCell(4);#}
+{#			 action.innerHTML="<input type='button' name='' id='' onclick='dele(this)' value='删除' /><input type='button' name='' id='' onclick='save(this)' value='保存' />"#}
+{#		}#}
+{##}
+{#		function save(obj){#}
+{#//			alert(obj.parentNode.parentNode.innerHTML)#}
+{#			var tr = obj.parentNode.parentNode; // 获取的本行的tr#}
+{#		//	alert(tr.cells[0].childNodes[0].value)#}
+{#			tr.cells[0].innerHTML = tr.cells[0].childNodes[0].value#}
+{#			tr.cells[1].innerHTML = tr.cells[1].childNodes[0].value#}
+{#			tr.cells[2].innerHTML = "<select type='' width='14px' value='"+tr.cells[2].innerHTML+"' size='' ><option value='1'>file</option><option value='2'>text</option></select>";#}
+{#			tr.cells[4].innerHTML = "<input type='button' name='' onclick='dele(this)' id='' value='删除' /><input type='button' name='' id=''  onclick='update(this)' value='修改' />"#}
+{#		}#}
+{##}
+{#		function dele(obj){#}
+{#			var otr = obj.parentNode.parentNode;#}
+{#//			var tab = document.getElementById("tab");#}
+{#//			tab.deleteRow(otr.rowIndex)#}
+{#			var tab =  otr.parentNode; //自己的父节点 就是table#}
+{#			tab.removeChild(otr);#}
+{#		}#}
+{##}
+{#function update(obj){#}
+{#//			alert(obj.parentNode.parentNode.innerHTML)#}
+{#			var tr = obj.parentNode.parentNode; // 获取的本行的tr#}
+{#		//	alert(tr.cells[0].childNodes[0].value)#}
+{#			tr.cells[0].innerHTML = "<input type='text' value='"+tr.cells[0].innerHTML+"' size='10' />";#}
+{#            tr.cells[1].innerHTML = "<input type='select' value='"+tr.cells[1].innerHTML+"' size='10' />";#}
+{#            // value='"+tr.cells[2].innerHTML+"'#}
+{#            tr.cells[2].innerHTML = "<select type='' width='14px' value='value' size='' ><option value='file'>file</option><option value='text'>text</option></select>";#}
+{#			tr.cells[4].innerHTML = "<input type='button' name='' onclick='dele(this)' id='' value='删除' /><input type='button' name='' onclick='save(this)' id=''  value='保存' />"#}
+{#		}#}
+{##}
+{#        function upd_text_file(obj){#}
+{#            alert(obj.value);#}
+{#            var tr = obj.parentNode.parentNode;#}
+{#            if (obj.value == 2){#}
+{#                tr.cells[3].innerHTML = "<input type='text' value='' size='10' />";#}
+{#            }else{#}
+{#                tr.cells[3].innerHTML = "<input type='file' width='14px' value='' size='' />";#}
+{#            }#}
+{##}
+{##}
+{#        }#}
+
+    </script>
+</body>
+</html>

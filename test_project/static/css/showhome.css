@@ -1,0 +1,18 @@
+
+.head_form{
+    height: 58px;
+
+}
+
+.title_head{
+    /*background-color:#293C55;*/
+    background-color: #fbffd1;
+
+}
+
+.title_head >li{
+    /*color: black;*/
+    color: beige;
+    background:black;
+    background-color: black;
+}

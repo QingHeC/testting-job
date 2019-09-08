@@ -1,0 +1,241 @@
+
+
+{% extends "showhome.html" %}
+
+{% block title %}
+    <title>项目</title>
+{% endblock %}
+
+{% block add_css %}
+{#<link rel="stylesheet" href="/static/css/bootstrap-3.3.4.css">#}
+    <link rel="stylesheet" href="/static/css/bootstrap-combined.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+
+    <link rel="stylesheet" href="/static/css/font-awesome.4.6.0.css" type="text/css">
+    <link rel="stylesheet" href="/static/stagings/stagings.css" type="text/css">
+{#    <link rel="stylesheet" href="/static/publics/public_s.css" type="text/css">#}
+{#    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">#}
+
+
+{% endblock %}
+
+{% block add_js %}
+    <script src="/static/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/static/js/bootstrap.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block center_text %}
+
+{% csrf_token %}
+<div>
+
+</div>
+
+<div>
+    <div class="span12">
+        <div style="float: left;">
+            <select name="" id="project_name" class="combobox span2" data-style="btn-primary">
+
+            </select>
+        </div>
+{#        <div style="float: left;">#}
+
+        <div style="width: 10%;float: left">
+{#            <button class="btn" type="button">添加模块</button>#}
+            <a id="modal-579920" href="#modal-container-579921" role="button" class="btn" data-toggle="modal">添加模块</a>
+            <div id="modal-container-579921" class="modal  fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: 30%;">
+				<div class="modal-header">
+					 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel">
+						添加模块
+					</h3>
+				</div>
+				<div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <form class="form-inline">
+                                    <fieldset>
+                                         <label>模块名：</label><input id="model_pro_name" type="text" style="height: 27px;" />
+                                        <span class="help-block">描述：.</span>
+                                        <textarea id="model_pro_text" cols="30" rows="10" style="width: 100%"></textarea>
+{#                                        <label class="checkbox"><input type="checkbox" /> 勾选同意</label>#}
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button> <button class="btn btn-primary" data-dismiss="modal"  onclick="save_projectName()">保存设置</button>
+				</div>
+			</div>
+        </div>
+        <div style="width: 20%;float: left">
+{#                是哪个模块，需要验证是否已经选择#}
+                <h4 href="#" style="text-align:left;">接口属于：<a id="show_list_reqname" name="" style="text-align:left;"></a>
+                </h4>
+            </div>
+{#target="view_window"#}
+            <a class="btn btn-primary" target="view_window" id="addhttp" urd={% url "add_interface" %} } target="_blank" onclick="add_date(this)">添加HTTP</a>
+
+    </div>
+    <div class="container-fluid span3">
+
+        <br>
+        <br>
+	<div class="row-fluid">
+
+		<div class="">
+			<div class="accordion" id="accordion-539820">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-539820" href="#accordion-element-475751">显示全部</a>
+					</div>
+
+                    <div id="accordion-element-475751" class="accordion-body collapse">
+                        {% for foo in task_Datas %}
+
+                        <div class="accordion-inner" >
+                            <a href="###" value="" name="{{ foo.0 }}" onclick="req_rightdata({{ foo.0 }},'{{ foo.1 }}');">{{ foo.1 }}</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+{#					<div id="accordion-element-475751" class="accordion-body collapse">#}
+{#						<div class="accordion-inner">#}
+{#							功能块...#}
+{#						</div>#}
+{#					</div>#}
+				</div>
+				<div class="accordion-group">
+
+
+					<div class="accordion-heading">
+						 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-539820" href="#accordion-element-452251">选项卡 #2</a>
+					</div>
+					<div id="accordion-element-452251" class="accordion-body collapse">
+						<div class="accordion-inner">
+							功能块...
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <div class="span10">
+
+        <div class="fra_center_right" style="width:100%;height:100%;">
+{#/test/interface/add_interface/list_name/#}
+            <iframe id="ifra_right_data" width="100%" height="100%"  src="{% url 'list_name' %} + '?'" frameborder="0" onload="this.height=this.contentWindow.document.body.scrollHeight+390"></iframe>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script type="text/javascript">
+
+     var project_name = document.getElementById("project_name");
+     var project_list = {{ revert_lists | safe}} ;
+     {#console.log(project_list);#}
+     {#var project_list = [{#}
+     {#    name : "北京",#}
+     {#    cityList:[]#}
+
+     {#    name : "北京1",#}
+     {#    cityList:[]#}
+
+
+     for(var i =0 ;i< project_list.length;i++){
+         var option = new Option(project_list[i]["name"],project_list[i]["id"])
+         project_name.options.add(option)
+     }
+
+
+     {#初始化  iframe url#}
+     var project_id_va = document.getElementById("project_name").value;
+     url = "{% url 'list_name' %}"+ "?project=" + project_id_va;
+     var par = document.getElementById("ifra_right_data").src = url;
+
+
+     {#页面根据选择了哪个模块显示内容#}
+     function req_rightdata(dat_id,dat){
+            {#alert(dat);#}
+            url = "{% url 'list_name' %}"+ "?id=" +dat_id +"&data=" + dat + "&project=" + project_id_va;
+            var par = document.getElementById("ifra_right_data").src = url;
+
+            document.getElementById("show_list_reqname").innerText = dat;
+            document.getElementById("show_list_reqname").name = dat_id;
+     }
+
+
+     {##添加HTTP接口#}
+     function add_date(data_this){
+            {#ur = '{% url "add_interface" %} }';#}
+            {#alert(url);#}
+            url = data_this.getAttribute("urd");
+            {#url = document.getElementById("ifra_right_data").urd;#}
+            {#alert(url);#}
+            {#var s = document.getElementById("txt");#}
+            var project_id_va = document.getElementById("project_name").value;
+            var list_reqname = document.getElementById("show_list_reqname").innerText;
+            var list_reqname_id = document.getElementById("show_list_reqname").name;
+            console.log(project_id_va);
+            if (list_reqname){
+                location.href=url + "?list_name=" + list_reqname + "&project=" + project_id_va + "&small=" + list_reqname_id;
+                {#open('url + "?list_name=" + %s + "&project=" + %s')%(document.getElementById("show_list_reqname").innerText,project_id_va);#}
+                alert(location.href);
+            } else{
+                alert("请选择相应模块");
+            }
+
+
+     };
+
+
+
+        function save_projectName(){
+
+            model_pro_name = document.getElementById("model_pro_name").value;
+            model_pro_text = document.getElementById("model_pro_text").value;
+            model_pro_id = document.getElementById("project_name").value;
+
+            {#alert(model_pro_id);#}
+
+            $.ajax({
+                url:"{% url 'add_project_name' %}",
+                type:"POST",
+                {#contentType:"application/json",#}
+                dataType:"json",
+                processData: false,
+                contentType: false,
+                async:false,
+                data:JSON.stringify({
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "model_pro_id":model_pro_id,
+                    "model_pro_name":model_pro_name,
+                    "model_pro_text":model_pro_text,
+                }),
+                success:function (data) {
+
+                    if (data["success"]){
+                        console.log("后台返回成功");
+                        alert(data["success"]);
+                        console.log("id是 %s" %data["data_id"]);
+                    }else {
+                        console.log("后台返回失败");
+                        alert(data["fail"]);
+                    }
+                    window.location.reload();   //刷新整个页面
+
+                    {#alert("提交成功")#}
+                }
+            })
+        }
+    </script>
+
+{% endblock %}

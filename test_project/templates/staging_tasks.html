@@ -1,0 +1,187 @@
+
+
+{% extends "showhome.html" %}
+
+{% block title %}
+    <title>项目</title>
+{% endblock %}
+
+{% block add_css %}
+
+    <link rel="stylesheet" href="/static/css/bootstrap-combined.min.css" type="text/css">
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.4.6.0.css" type="text/css">
+    <link rel="stylesheet" href="/static/stagings/stagings.css" type="text/css">
+    <link rel="stylesheet" href="/static/publics/public_s.css" type="text/css">
+
+
+{% endblock %}
+
+{% block add_js %}
+    <script src="/static/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/static/js/bootstrap.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block center_text %}
+
+    {% csrf_token %}
+    <div class="fra_line">
+{#        头部#}
+        <div class="fra_header">
+
+        </div>
+{#        中间位置#}
+        <div>
+    {#            左侧位置#}
+            <div class="fra_center_left">
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="accordion" id="accordion-992140">
+                                <div class="accordion-group">
+                                    <div class="accordion-heading">
+                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-992140" href="#accordion-element-301831">
+                                             分配的任务
+                                         </a>
+                                    </div>
+                                    <div id="accordion-element-301831" class="accordion-body collapse " onclick="open_task_fold('accordion-element-301831')">
+                                        {% for work_name in work_tasking_name %}
+                                        <div class="accordion-inner">
+
+{#                                                target="target"#}
+                                                <a class="a_content_text"  style="cursor:pointer" id={{ work_name.id }} href="#" onclick="duty_('{{ work_name.model_work_name }}')">{{ work_name.model_work_name }}</a>
+
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="accordion-group">
+                                    <div class="accordion-heading">
+                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-992140" href="#accordion-element-423050">
+                                             任务运行
+                                         </a>
+                                    </div>
+                                    <div id="accordion-element-423050" class="accordion-body collapse" onclick="open_task_fold('accordion-element-423050')">
+                                        {% for work_name in work_tasking_name %}
+                                        <div class="accordion-inner">
+
+{#                                                <a class="a_content_text" style="cursor:pointer" target="target" id={{ work_name.id }} href="#" onclick="run_work_data({{ work_name.id }},'{{ work_name.model_work_name }}')">{{ work_name.model_work_name }}</a>#}
+                                                <a class="a_content_text" style="cursor:pointer" target="target" id={{ work_name.id }} href="#" onclick="run_work_data('{{ work_name.model_work_name }}')">{{ work_name.model_work_name }}</a>
+
+                                        </div>
+                                        {% endfor %}
+{#                                        <div class="accordion-inner">#}
+{#                                            功能块...#}
+{#                                        </div>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    {#            <div class="tabbable">#}
+    {#                <div class="fra_center_left">#}
+    {#                <a class="fra_center_left_pane" href="" onclick="duty_()">任务</a>#}
+    {#                <a class="fra_center_left_pane" href="">任务1</a>#}
+    {#                <a class="fra_center_left_pane" href="">任务2</a>#}
+    {#            </div>#}
+    {#            中间位置#}
+        <div class="fra_center_right" style="height:100%;">
+
+{#src="/stagings/app/runtask/" #}
+            <iframe id="i_ifr" width="90%" height="100%" src=""  onload="this.height=this.contentWindow.document.body.scrollHeight+35"></iframe>
+
+{#            <iframe width="60%" src="#"></iframe>#}
+
+        </div>
+
+
+{#                <div class="fra_center_center ">#}
+{#                    <div id="0021" >#}
+{#                        nihao#}
+{#                    </div>#}
+{#                    <div id="0022"  style="display:none">#}
+{#                        nihao1#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+
+{#            右侧位置#}
+            <div>
+
+            </div>
+
+        </div>
+{#        <p>nihoa</p>#}
+    </div>
+
+
+    <script type="text/javascript">
+
+
+        function open_task_fold123(id) {
+            var all_class = document.getElementByClassName("accordion-body");
+            for (var i=1;i<all_class.newsList.length;i++) {
+                all_class[i].classList.remove("in");
+            }
+            add_concat = classVal.concat("in");
+            document.getElementById(id).setAttribute("class",add_concat);
+
+        }
+
+        function duty_(mod_name) {
+            url = "/stagings/app/runtask/"+ "?mod_name=" +mod_name;
+            var par = document.getElementById("i_ifr").src = url;
+        }
+
+        function run_work_data(da) {
+            {#alert(da)#}
+            url = "{% url 'run_word_my' %}"+ "?describe=" +da;
+            {#alert(url);#}
+            var par = document.getElementById("i_ifr").src = url;
+        }
+
+        function click_runname(id) {
+
+            {#$("#i_ifr").attr("name",id);#}
+            {#alert(id);#}
+
+
+             $.ajax({
+                url:"/stagings/app/runtask/",
+                type:"POST",
+                contentType:"application/json",
+                dataType:"json",
+                data:JSON.stringify({
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "id":id
+
+                }),
+                success:function (data) {
+
+                    alert(data)
+
+                    if (data["success"]){
+                        console.log("后台返回成功");
+                        alert(data["success"]);
+                    }else {
+                        console.log("后台返回失败");
+                        alert(data["fail"]);
+                    }
+                    {#var _body = window.parent;#}
+                    {#var _iframe1=_body.document.getElementById("i_ifr");#}
+                    {#_iframe1.contentWindow.location.reload(true);#}
+
+                    {#alert("提交成功")#}
+                }
+            })
+        }
+
+
+    </script>
+
+
+{% endblock %}

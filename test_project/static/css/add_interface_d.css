@@ -1,0 +1,22 @@
+
+/*请求方式*/
+.add-req-met{
+    float:left;
+    padding-right: 0px;
+    width: 10%;
+}
+
+.add-req-url{
+    width: 60%;
+    float: left;
+}
+
+/*url 参数*/
+.add-req-par{
+    float: left;
+}
+
+.send-req-data{
+
+    float: left;
+}

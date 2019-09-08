@@ -1,0 +1,46 @@
+.navbar-lis{
+    float: left;
+    height: 100%;
+    width: 100%;
+}
+.back-col{
+    background-color:#FFFFFF;
+    padding-top: 10px;
+}
+
+
+.navbar-lis>li{
+    list-style: none;
+    float: left;
+    font-size: 160%;
+    text-align:center;
+    line-height:40px;
+    color: #707093;
+}
+.head-list-butt>a{
+    text-decoration:none;
+    color: #707093;
+}
+
+.d-d-top{
+    top: 33px;
+}
+
+
+.is_senter{
+    margin:auto;
+}
+
+.head-list-butt{
+    height: 100%;
+    width: 10%;
+}
+
+.div-left{
+    float: left;
+}
+
+.dislodge_dot{
+    list-style: none;
+}
+

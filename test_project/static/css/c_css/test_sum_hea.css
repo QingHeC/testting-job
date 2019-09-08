@@ -1,0 +1,47 @@
+.test-header-text{
+    height: 100px;
+    width: 100%;
+    text-align: center;
+    font-size:33px;
+    padding-top: 60px;
+    padding-right: 10%;
+
+}
+
+.page-ist-ul-tes{
+    width: 80%;
+    height: 60px;
+    list-style: none;
+    float: left;
+}
+
+.page-ist-ul-tes-disize{
+    width: 100%;
+    height: 160px;
+}
+
+.page-ist-ul-tes-img{
+    width: 20%;
+    height: 100%;
+    float: left;
+      display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.page-ist-ul-tes-text{
+    width: 78%;
+    height: 100%;
+    margin-left: 6px;
+    float: left;
+    padding-left:10px ;
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}

@@ -1,0 +1,23 @@
+.ad-req-met{
+    width: 10%;
+    float: left;
+    padding-right: 0px;
+    /*height: 43px;*/
+
+}
+
+.ad-req-url{
+    width: 49%;
+    margin-left:0px;
+    float: left;
+}
+
+.ad-req-par{
+    /*width: ;*/
+    /*margin-left:0px;*/
+    padding: 0px;
+    float: left;
+}
+
+
+

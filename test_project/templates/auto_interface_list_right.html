@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>right</title>
+        <link href="/static/css/auto_interface_lis/auto_inter_list.css" type="text/css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/css/bootstrap-3.3.4.css">
+    <link rel="stylesheet" href="/static/css/auto_interface_lis/css/index.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.css">
+
+    <link rel="stylesheet" href="/static/css/layoutit.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/bootstrap-combined.min.css" type="text/css">
+
+    <script  src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+{% csrf_token %}
+    <div>
+        <div class="container-fluid">
+	        <div class="row-fluid">
+		        <div class="span12">
+			        <a id="modal-646651" href="#modal-container-646651" role="button" class="btn" data-toggle="modal">分配</a>
+{#hide#}
+			        <div id="modal-container-646651"  class="modal  fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				        <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					        <h3 id="myModalLabel">
+						        分配执行人
+					        </h3>
+				        </div>
+				    <div class="modal-body">
+                    <table cellpadding="0" cellspacing="0" class="table table-bordered table-striped table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <td width="1" align="center" bgcolor="#EFEFEF" name="Num">
+                                    <input type="checkbox" name="asstt" value="checkbox" />
+                                </td>
+    {#                <th>ID</th>#}
+                                <th  width="29">名字</th>
+                                <th width="70">邮箱</th>
+{#                    <th>电话</th>#}
+                </tr>
+            </thead>
+                    <tbody id="tab_content">
+
+                    {% for data in users %}
+                        <tr nid="{{ data.id }}">
+
+                            <td width="1" align="center" bgcolor="#FFFFFF">
+                                <input type="checkbox" name="asstt"  value={{ data.id }} />
+                            </td>
+
+    {#                        <td na="nid">{{ data.id  }}</td>#}
+                            <td  width="29" na="requests_met" id={{ data.id  }}>{{ data.name }}</td>
+                            <td  width="70"na="requests_met">{{ data.name_email }}</td>
+{#                            <td na="urls">{{ data.phone }}</td>#}
+
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+        </table>
+{#					<p>#}
+{#						显示信息#}
+{#					</p>#}
+				</div>
+				<div class="modal-footer">
+					 <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button class="btn btn-primary" onclick="assignmentt()">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+    </div>
+
+    <div>
+    <table cellpadding="0" cellspacing="0" class="table table-bordered table-striped table-hover table-condensed">
+            <thead>
+                <tr>
+                    <td width="32" align="center" bgcolor="#EFEFEF" name="Num">
+                        <input type="checkbox" name="checkbox" value="checkbox" />
+                    </td>
+    {#                <th>ID</th>#}
+                    <th>名字</th>
+                    <th>请求方式</th>
+                    <th>URL</th>
+                    <th>Params</th>
+    {#                <th>Headers</th>#}
+                    <th>body</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+                    <tbody id="tab_content">
+
+                    {% for data in inter_list %}
+                        <tr nid="{{ data.id }}">
+
+                            <td align="center" bgcolor="#FFFFFF">
+                                <input type="checkbox" name="checkbox1" value={{ data.id  }} />
+                            </td>
+
+    {#                        <td na="nid">{{ data.id  }}</td>#}
+                            <td na="requests_met" id={{ data.id  }}>{{ data.name }}</td>
+                            <td na="requests_met">{{ data.req }}</td>
+                            <td na="urls">{{ data.url }}</td>
+                            <td na="params">{{ data.params }}</td>
+    {#                        <td na="headers">{{ data.headers }}</td>#}
+                            <td na="body">{{ data.body }}</td>
+                            <td na="describe">{{ data.describe }}</td>
+                            <td>
+                                <a class="glyphicon glyphicon-remove icon del-row" onclick="delete_date({{ data.id  }})"></a>
+                                <a class="fa fa-pencil-square-o icon edit-row" onclick="revise_date({{ data.id  }})"></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+        </table>
+    </div>
+</body>
+<script type="text/javascript">
+    
+    function assignmentt() {
+
+        var asstt = document.getElementsByName("asstt");
+        var asstt_len = asstt.length;
+        task = [];
+        for(var i=0;i<asstt_len;i++){
+            if(asstt[i].checked){
+                task.push(asstt[i].value);
+                {#alert(asstt[i].value);#}
+            }
+        }
+
+        get_tables = get_table_asstt();
+        if(get_tables ==""){
+            alert("请选择要分配的任务");
+            return false;
+        }
+        if(task ==""){
+            alert("请选择要分配的人");
+            return false;
+        }
+        alert(get_tables);
+
+        $.ajax({
+                url:"{% url 'dis_tack' %}",
+                type:"POST",
+                contentType:"application/json",
+                dataType:"json",
+                data:JSON.stringify({
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "task":task,
+                    "get_tables":get_tables,
+
+                }),
+                success:function (data) {
+
+                    if (data["success"]){
+                        console.log("后台返回成功");
+                        alert(data["success"]);
+                    }else {
+                        console.log("后台返回失败");
+                        alert(data["fail"]);
+                    }
+                }
+            })
+
+        };
+
+        function get_table_asstt() {
+            var table_asstt = document.getElementsByName("checkbox1");
+            var table_asstt_len = table_asstt.length;
+            task_ta = [];
+            for(var i=0;i<table_asstt_len;i++){
+                if(table_asstt[i].checked){
+                    task_ta.push(table_asstt[i].value);
+                    {#alert(asstt[i].value);#}
+                }
+            }
+            {#alert(task_ta);#}
+            return task_ta;
+        };
+
+
+        {#删除数据#}
+        function delete_date(id){
+
+
+
+            $.ajax({
+                url:"{% url 'req_list_deletes' %}",
+                type:"POST",
+                contentType:"application/json",
+                dataType:"json",
+                data:JSON.stringify({
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "id":id,
+
+                }),
+                success:function (data) {
+
+                    if (data["success"]){
+                        console.log("后台返回成功");
+                        alert(data["success"]);
+                    }else {
+                        console.log("后台返回失败");
+                        alert(data["fail"]);
+                    }
+                }
+            })
+
+        };
+
+
+        function revise_date(){
+            alert("修改功能暂未实现");
+        }
+
+
+
+
+</script>
+</html>
