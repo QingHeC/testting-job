@@ -1,2 +1,2 @@
 # testting-job
-django==2.1.1
+*.py linguist-language=python3 //django==2.1.1
